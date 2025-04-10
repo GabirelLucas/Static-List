@@ -1,58 +1,3 @@
-<!--# React + TypeScript + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```-->
-
 # Lista de Tarefas
 
 Projeto simples de lista de tarefas estáticas usando React com Vite.
@@ -62,7 +7,8 @@ Projeto simples de lista de tarefas estáticas usando React com Vite.
 - React
 - TypeScript
 - Vite
-- CSS Modules
+- Tailwind CSS
+- ESLint & Prettier
 - Phosphor Icons
 
 ## 🎯 Funcionalidades
@@ -70,6 +16,7 @@ Projeto simples de lista de tarefas estáticas usando React com Vite.
 - Renderização de 5 tarefas estáticas
 - Alternar status (concluída ou não) com botão
 - Interface escura com design responsivo para desktop
+- Código organizado com boas práticas de estrutura e estilo
 
 ## 🚀 Instalação
 
@@ -97,12 +44,32 @@ npm install
 npm run dev
 ```
 
-## 🖥️ Visualização
+## 🖼️ Estrutura de Pastas
 
-Abra [http://localhost:5173](http://localhost:5173) no navegador.
+- `src/interfaces.ts`: Arquivo com todas as interfaces utilizadas
+- `src/mock.ts`: Dados estáticos das tarefas
+- `src/components`: Componentes reutilizáveis da aplicação
+- `tailwind.config.js`: Definição personalizada de cores e configurações de estilo
+
+## 🧹 Padronização de Código
+
+- **Interfaces** no `interfaces.ts`
+- **Dados mockados** no `mock.ts`
+- **Componentes** usando a sintaxe `const Nome: React.FC = () => {}`
+- **Sem valores fixos** como `gap-[1rem]`; use espaçamentos do Tailwind
+- **Cores personalizadas** no `tailwind.config.js` (sem `text-[#...]`)
+- **Importações organizadas** em ordem:
+  1. Pacotes externos
+  2. Pacotes internos (`@/`)
+  3. Importações locais (`./` ou `../`)
+
+## 🔧 Scripts
+
+- `npm run dev`: inicia o servidor local
+- `npm run build`: gera a versão de produção
+- `npm run lint`: verifica problemas no código com o ESLint
+- `npm run format`: formata o código com Prettier
 
 ---
 
 Feito com 💜 por Gabriel Nunes
-
-
