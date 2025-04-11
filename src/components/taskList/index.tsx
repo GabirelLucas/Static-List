@@ -1,7 +1,14 @@
 import { useState } from "react";
-import { CheckCircle, Circle } from "phosphor-react";
+import { DndContext, closestCenter } from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 import { Task } from "../../interfaces";
 import { initialTasks } from "../../mock";
+import TaskForm from "../taskForm";
+import SortableItem from "../sortableItem";
 
 const TaskList: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>(initialTasks);
@@ -13,35 +20,47 @@ const TaskList: React.FC = () => {
       )
     );
   };
+  const handleAddTask = (title: string, description: string) => {
+    const newTask: Task = {
+      id: tasks.length + 1,
+      title,
+      description,
+      completed: false,
+    };
+    setTasks((prev) => [newTask, ...prev]);
+  };
+
+  const deleteTask = (id: number) => {
+    setTasks((prev) => prev.filter((task) => task.id !== id));
+  };
+
+  const handleDragEnd = (event: any) => {
+    const { active, over } = event;
+    if (active.id !== over.id) {
+      const oldIndex = tasks.findIndex((task) => task.id === active.id);
+      const newIndex = tasks.findIndex((task) => task.id === over.id);
+      setTasks((prev) => arrayMove(prev, oldIndex, newIndex));
+    }
+  };
 
   return (
     <div className="flex flex-col gap-4 ">
-      {tasks.map((task) => (
-        <div
-          key={task.id}
-          className={`flex items-center bg-zinc-950 p-4 rounded-2 gap-4`}
+      <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+        <SortableContext
+          items={tasks.map((task) => task.id)}
+          strategy={verticalListSortingStrategy}
         >
-          <button
-            onClick={() => toggleTask(task.id)}
-            className={`bg-transparent border-none ${task.completed ? "text-violet-500" : "text-purple-400"} cursor-pointer`}
-          >
-            {task.completed ? (
-              <CheckCircle
-                size={24}
-                weight="fill"
-                className="text-violet-500"
-              />
-            ) : (
-              <Circle size={24} className="text-violet-500" />
-            )}
-          </button>
-
-          <div className="flex flex-col">
-            <strong className="text-slate-100 font-bold">{task.title}</strong>
-            <span className="text-neutral-500">{task.description}</span>
-          </div>
-        </div>
-      ))}
+          {tasks.map((task) => (
+            <SortableItem
+              key={task.id}
+              task={task}
+              toggleTask={toggleTask}
+              deleteTask={deleteTask}
+            />
+          ))}
+        </SortableContext>
+      </DndContext>
+      <TaskForm onAddTask={handleAddTask} />
     </div>
   );
 };
