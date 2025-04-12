@@ -20,7 +20,7 @@ const SortableItem: React.FC<SortableItemProps> = ({
     <div
       ref={setNodeRef}
       style={style}
-      className="flex items-center bg-zinc-950 p-4 rounded-2 gap-4 relative group border border-transparent hover:border-zinc-400 hover:opacity-80 cursor-grab focus-within:border-dashed"
+      className="flex items-center bg-zinc-950 p-4 rounded-2 gap-4 select-none relative group border border-transparent hover:border-zinc-400 hover:opacity-80 cursor-grab focus-within:border-dashed"
     >
       {/* Invisible draggable layer */}
       <div
