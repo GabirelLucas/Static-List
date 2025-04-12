@@ -1,6 +1,7 @@
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { TaskFormProps } from "../../interfaces";
 
 const taskSchema = z.object({
   title: z.string().min(1, "Título é obrigatório"),
@@ -8,10 +9,6 @@ const taskSchema = z.object({
 });
 
 type TaskFormData = z.infer<typeof taskSchema>;
-
-interface TaskFormProps {
-  onAddTask: (title: string, description: string) => void;
-}
 
 const TaskForm: React.FC<TaskFormProps> = ({ onAddTask }) => {
   const {

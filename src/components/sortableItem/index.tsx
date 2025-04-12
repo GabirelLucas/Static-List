@@ -1,13 +1,7 @@
 import { CheckCircle, Circle, DotsSixVertical, Trash } from "phosphor-react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { Task } from "../../interfaces";
-
-interface SortableItemProps {
-  task: Task;
-  toggleTask: (id: number) => void;
-  deleteTask: (id: number) => void;
-}
+import { SortableItemProps } from "../../interfaces";
 
 const SortableItem: React.FC<SortableItemProps> = ({
   task,

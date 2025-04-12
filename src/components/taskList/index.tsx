@@ -14,8 +14,8 @@ const TaskList: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>(initialTasks);
 
   const toggleTask = (id: number) => {
-    setTasks((prev) =>
-      prev.map((task) =>
+    setTasks((state) =>
+      state.map((task) =>
         task.id === id ? { ...task, completed: !task.completed } : task
       )
     );
@@ -27,11 +27,11 @@ const TaskList: React.FC = () => {
       description,
       completed: false,
     };
-    setTasks((prev) => [newTask, ...prev]);
+    setTasks((state) => [newTask, ...state]);
   };
 
   const deleteTask = (id: number) => {
-    setTasks((prev) => prev.filter((task) => task.id !== id));
+    setTasks((state) => state.filter((task) => task.id !== id));
   };
 
   const handleDragEnd = (event: any) => {
@@ -39,7 +39,7 @@ const TaskList: React.FC = () => {
     if (active.id !== over.id) {
       const oldIndex = tasks.findIndex((task) => task.id === active.id);
       const newIndex = tasks.findIndex((task) => task.id === over.id);
-      setTasks((prev) => arrayMove(prev, oldIndex, newIndex));
+      setTasks((state) => arrayMove(state, oldIndex, newIndex));
     }
   };
 
