@@ -1,4 +1,4 @@
-import { CheckCircle, Circle, DotsSixVertical, Trash } from "phosphor-react";
+import { CheckCircle, Circle, Trash } from "phosphor-react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { SortableItemProps } from "../../interfaces";
@@ -20,16 +20,14 @@ const SortableItem: React.FC<SortableItemProps> = ({
     <div
       ref={setNodeRef}
       style={style}
-      {...attributes}
-      className="flex items-center bg-zinc-950 p-4 rounded-2 gap-4"
+      className="flex items-center bg-zinc-950 p-4 rounded-2 gap-4 relative group"
     >
-      <div {...listeners} className="cursor-grab text-neutral-500">
-        <DotsSixVertical size={24} />
-      </div>
+      {/* Invisible draggable layer */}
+      <div {...attributes} {...listeners} className="absolute inset-0 z-0" />
 
       <button
         onClick={() => toggleTask(task.id)}
-        className={`bg-transparent border-none ${task.completed ? "text-violet-500" : "text-purple-400"} cursor-pointer`}
+        className={`bg-transparent border-none ${task.completed ? "text-violet-500" : "text-purple-400"} cursor-pointer z-10`}
       >
         {task.completed ? (
           <CheckCircle size={24} weight="fill" className="text-violet-500" />
@@ -38,14 +36,14 @@ const SortableItem: React.FC<SortableItemProps> = ({
         )}
       </button>
 
-      <div className="flex flex-col">
+      <div className="flex flex-col z-10">
         <strong className="text-slate-100 font-bold">{task.title}</strong>
         <span className="text-neutral-500">{task.description}</span>
       </div>
 
       <button
         onClick={() => deleteTask(task.id)}
-        className="ml-auto text-red-500 hover:text-red-400"
+        className="ml-auto rounded-2xl p-1 text-red-500 hover:text-red-400 hover:bg-neutral-700 hover:rounded-2xl hover:p-1 active:scale-95 cursor-pointer select-none transition-transform z-10"
         title="Excluir tarefa"
       >
         <Trash size={20} />
