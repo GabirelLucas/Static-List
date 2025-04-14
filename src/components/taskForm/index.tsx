@@ -2,6 +2,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { TaskFormProps } from "../../interfaces";
+import React from "react";
 
 const taskSchema = z.object({
   title: z.string().min(1, "Título é obrigatório"),

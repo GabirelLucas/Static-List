@@ -2,6 +2,8 @@ import { CheckCircle, Circle, Trash } from "phosphor-react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { SortableItemProps } from "../../interfaces";
+import React from "react";
+import { motion } from "framer-motion";
 
 const SortableItem: React.FC<SortableItemProps> = ({
   task,
@@ -17,7 +19,12 @@ const SortableItem: React.FC<SortableItemProps> = ({
   };
 
   return (
-    <div
+    <motion.div
+      layout
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      transition={{ duration: 0.2 }}
       ref={setNodeRef}
       style={style}
       className="flex items-center bg-zinc-950 p-4 rounded-2 gap-4 select-none border border-transparent hover:border-zinc-400 hover:opacity-80 cursor-grab active:cursor-grabbing "
@@ -43,7 +50,6 @@ const SortableItem: React.FC<SortableItemProps> = ({
         </div>
       </div>
 
-      {/* Botão fora da área de arrasto */}
       <button
         onClick={() => deleteTask(task.id)}
         className="ml-auto rounded-2xl p-1 text-red-500 hover:text-red-400 hover:bg-neutral-700 active:scale-95 cursor-pointer transition-transform"
@@ -51,7 +57,7 @@ const SortableItem: React.FC<SortableItemProps> = ({
       >
         <Trash size={20} />
       </button>
-    </div>
+    </motion.div>
   );
 };
 

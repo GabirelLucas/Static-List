@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import {
   arrayMove,
@@ -9,6 +9,7 @@ import { Task } from "../../interfaces";
 import { initialTasks } from "../../mock";
 import TaskForm from "../taskForm";
 import SortableItem from "../sortableItem";
+import { AnimatePresence } from "framer-motion";
 
 const TaskList: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>(initialTasks);
@@ -20,6 +21,7 @@ const TaskList: React.FC = () => {
       )
     );
   };
+
   const handleAddTask = (title: string, description: string) => {
     const newTask: Task = {
       id: tasks.length + 1,
@@ -50,14 +52,16 @@ const TaskList: React.FC = () => {
           items={tasks.map((task) => task.id)}
           strategy={verticalListSortingStrategy}
         >
-          {tasks.map((task) => (
-            <SortableItem
-              key={task.id}
-              task={task}
-              toggleTask={toggleTask}
-              deleteTask={deleteTask}
-            />
-          ))}
+          <AnimatePresence>
+            {tasks.map((task) => (
+              <SortableItem
+                key={task.id}
+                task={task}
+                toggleTask={toggleTask}
+                deleteTask={deleteTask}
+              />
+            ))}
+          </AnimatePresence>
         </SortableContext>
       </DndContext>
       <TaskForm onAddTask={handleAddTask} />
