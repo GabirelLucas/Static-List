@@ -13,4 +13,5 @@ export interface SortableItemProps {
   task: Task;
   toggleTask: (id: number) => void;
   deleteTask: (id: number) => void;
+  isVisible: boolean
 }
